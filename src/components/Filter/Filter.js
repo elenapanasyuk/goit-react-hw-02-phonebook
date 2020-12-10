@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 
-function Filter({ value, onChange }) {
+function Filter({ filter, onChange }) {
   return (
     <label>
       Find Contacts by name
-      <input type="text" value={value} onChange={onChange} />
+      <input
+        type="text"
+        value={filter}
+        onChange={onChange}
+        placeholder="Enter name for search"
+      />
     </label>
   );
 }

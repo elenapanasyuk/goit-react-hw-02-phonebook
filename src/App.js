@@ -15,34 +15,29 @@ class App extends Component {
     ],
     filter: "",
   };
-  addContact = ({ name, number }) => {
+  handleAddContact = ({ name, number }) => {
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
+    this.setState(({ contacts }) => ({
+      contacts: [contact, ...contacts],
+    }));
+  };
+  handleCheckUniqueContact = (name) => {
     const { contacts } = this.state;
-    if (
-      contacts.find(
-        (contact) => contact.name.toLowerCase() === name.toLowerCase()
-      )
-    ) {
-      alert(`${name} is already in contacts`);
-    } else if (contacts.find((contact) => contact.number === number)) {
-      alert(`${number} is already in contacts`);
-    } else {
-      this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
-    }
+    const isExistContact = !!contacts.find((contact) => contact.name === name);
+    isExistContact && alert("Contact is already exist");
+    return !isExistContact;
   };
 
-  deleteContact = (id) =>
+  handleDeleteContact = (id) =>
     this.setState(({ contacts }) => ({
       contacts: contacts.filter((contact) => contact.id !== id),
     }));
 
-  changeFilter = (e) => {
+  handleChangeFilter = (e) => {
     this.setState({ filter: e.currentTarget.value });
   };
 
@@ -56,18 +51,21 @@ class App extends Component {
   };
   render() {
     const visibleContacts = this.getVisibleContacts();
-    const { contacts, filter } = this.state;
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
         <Container>
-          <ContactForm />
+          <ContactForm
+            onAdd={this.handleAddContact}
+            onCheckUnique={this.handleCheckUniqueContact}
+          />
         </Container>
         <Container title="Contacts">
-          <Filter filter={filter} onChange={this.changeFilter} />
+          <Filter filter={filter} onChange={this.handleChangeFilter} />
           <ContactList
             contacts={visibleContacts}
-            onDeleteContact={this.deleteContact}
+            onDeleteContact={this.handleDeleteContact}
           />
         </Container>
       </div>
