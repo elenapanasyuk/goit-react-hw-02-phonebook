@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-//import s from "./Container.module.css";
+import PropTypes from 'prop-types';
+import s from './Container.module.css';
 
 function Container({ title, children }) {
   return (
-    <div>
+    <div className={s.container}>
       {title && <h2>{title}</h2>}
       {children}
     </div>

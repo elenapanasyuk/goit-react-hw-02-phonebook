@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import shortid from "shortid";
-import Container from "./components/Container";
-import Filter from "./components/Filter";
-import ContactForm from "./components/ContactForm";
-import ContactList from "./components/ContactList";
+import React, { Component } from 'react';
+import shortid from 'shortid';
+import Container from './components/Container';
+import Filter from './components/Filter';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
 
 class App extends Component {
   state = {
     contacts: [
-      { id: shortid.generate(), name: "Rosie Simpson", number: "459-12-56" },
-      { id: shortid.generate(), name: "Hermione Kline", number: "443-89-12" },
-      { id: shortid.generate(), name: "Eden Clements", number: "645-17-79" },
-      { id: shortid.generate(), name: "Annie Copeland", number: "227-91-26" },
+      { id: shortid.generate(), name: 'Rosie Simpson', number: '459-12-56' },
+      { id: shortid.generate(), name: 'Hermione Kline', number: '443-89-12' },
+      { id: shortid.generate(), name: 'Eden Clements', number: '645-17-79' },
+      { id: shortid.generate(), name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: "",
+    filter: '',
   };
   handleAddContact = ({ name, number }) => {
     const contact = {
@@ -25,19 +25,19 @@ class App extends Component {
       contacts: [contact, ...contacts],
     }));
   };
-  handleCheckUniqueContact = (name) => {
+  handleCheckUniqueContact = name => {
     const { contacts } = this.state;
-    const isExistContact = !!contacts.find((contact) => contact.name === name);
-    isExistContact && alert("Contact is already exist");
+    const isExistContact = !!contacts.find(contact => contact.name === name);
+    isExistContact && alert('Contact is already exist');
     return !isExistContact;
   };
 
-  handleDeleteContact = (id) =>
+  handleDeleteContact = id =>
     this.setState(({ contacts }) => ({
-      contacts: contacts.filter((contact) => contact.id !== id),
+      contacts: contacts.filter(contact => contact.id !== id),
     }));
 
-  handleChangeFilter = (e) => {
+  handleChangeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
   };
 
@@ -45,8 +45,8 @@ class App extends Component {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
 
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
     );
   };
   render() {
@@ -54,8 +54,8 @@ class App extends Component {
     const { filter } = this.state;
     return (
       <div>
-        <h1>Phonebook</h1>
         <Container>
+          <h1>Phonebook</h1>
           <ContactForm
             onAdd={this.handleAddContact}
             onCheckUnique={this.handleCheckUniqueContact}
