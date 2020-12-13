@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import shortid from 'shortid';
 import PropTypes from 'prop-types';
 import s from './ContactForm.module.css';
 
@@ -18,23 +17,11 @@ class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { name, number } = this.state;
-    const { onAdd } = this.props;
 
-    const isValidatedForm = this.validateForm();
-    if (!isValidatedForm) return;
-    onAdd({ id: shortid.generate(), name, number });
+    this.props.onSubmit(this.state);
     this.resetForm();
   };
-  validateForm = () => {
-    const { name, number } = this.state;
-    const { onCheckUnique } = this.props;
-    if (!name || !number) {
-      alert('Some field is empty');
-      return false;
-    }
-    return onCheckUnique(name);
-  };
+
   resetForm = () => this.setState(INITIAL_STATE);
   render() {
     const { name, number } = this.state;

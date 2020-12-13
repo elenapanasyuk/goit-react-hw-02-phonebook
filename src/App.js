@@ -21,15 +21,21 @@ class App extends Component {
       name,
       number,
     };
-    this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
-    }));
-  };
-  handleCheckUniqueContact = name => {
+
     const { contacts } = this.state;
-    const isExistContact = !!contacts.find(contact => contact.name === name);
-    isExistContact && alert('Contact is already exist');
-    return !isExistContact;
+
+    if (
+      contacts.find(
+        contact => contact.name.toLowerCase() === name.toLowerCase(),
+      )
+    ) {
+      alert('Contact is already exist');
+    } else if (!name || !number) {
+      alert('Some field is empty');
+    } else
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
   };
 
   handleDeleteContact = id =>
@@ -56,10 +62,7 @@ class App extends Component {
       <div>
         <Container>
           <h1>Phonebook</h1>
-          <ContactForm
-            onAdd={this.handleAddContact}
-            onCheckUnique={this.handleCheckUniqueContact}
-          />
+          <ContactForm onSubmit={this.handleAddContact} />
         </Container>
         <Container title="Contacts">
           <Filter filter={filter} onChange={this.handleChangeFilter} />
